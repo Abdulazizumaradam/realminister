@@ -2,89 +2,133 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Hosting Expired</title>
+<title>Subscription Expired</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-  body{
+  body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#fff1f1,#fce4e4);
-    text-align:center;
-    padding:40px;
+    background: linear-gradient(135deg,#fff7e6,#ffe6e6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
   }
-  .card{
-    max-width:520px;
-    margin:auto;
-    background:#fff;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+  .card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    padding: 40px 30px;
+    max-width: 650px;
+    width: 90%;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
   }
-  h1{color:#c0392b;}
-  .timer{
-    font-size:22px;
-    margin:15px 0;
-    color:#333;
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity:1; transform: translateY(0);}
   }
-  .btn{
-    display:inline-block;
-    margin:10px;
-    padding:14px 22px;
-    text-decoration:none;
-    border-radius:6px;
-    color:#fff;
-    font-weight:bold;
+  h1 {
+    color: #c0392b;
+    margin-bottom: 10px;
   }
-  .renew{background:#27ae60;}
-  .contact{background:#2980b9;}
-  small{color:#777;}
+  p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .timer {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #333;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  tr.best-plan {
+    background-color: #ffe8d6;
+    font-weight: bold;
+  }
+  .note {
+    color: #777;
+    font-size: 14px;
+  }
 </style>
-
 </head>
 <body>
 
 <div class="card">
   <h1>⚠️ Hosting Subscription Expired</h1>
-
-  <p>This website has been temporarily suspended because the hosting subscription has expired.</p>
+  <p>Your website subscription has expired. Review the plans below to renew and restore access.</p>
 
   <div class="timer">
-    Service removal in: <span id="countdown">Loading...</span>
+    Service will be removed in: <span id="countdown">Loading...</span>
   </div>
 
-  <a class="btn renew" 
-     href="https://wa.me/234XXXXXXXXXX?text=Hello%20I%20want%20to%20renew%20my%20website%20hosting">
-     🔄 Renew Now
-  </a>
+  <table>
+    <tr>
+      <th>Subscription Plan</th>
+      <th>Price (USD)</th>
+    </tr>
+    <tr class="best-plan">
+      <td>Annual</td>
+      <td>$17.6</td>
+    </tr>
+    <tr>
+      <td>6 Months</td>
+      <td>$8.7</td>
+    </tr>
+    <tr>
+      <td>3 Months</td>
+      <td>$4.5</td>
+    </tr>
+    <tr>
+      <td>Weekly</td>
+      <td>$3</td>
+    </tr>
+    <tr>
+      <td>3 Days</td>
+      <td>$2.1</td>
+    </tr>
+  </table>
 
-  <a class="btn contact" href="mailto:youremail@example.com">
-     📧 Contact Support
-  </a>
-
-  <br><br>
-  <small>Renew hosting to restore full access.</small>
+  <div class="note">
+    Highlighted plan is recommended. Renew your subscription to restore full website access.
+  </div>
 </div>
 
 <script>
-  // Countdown date
-  const expiry = new Date("2025-12-31 23:59:59").getTime();
+  // Countdown timer setup
+  const expiryDate = new Date("2025-12-31 23:59:59").getTime();
+  const countdownEl = document.getElementById("countdown");
 
-  setInterval(() => {
+  const interval = setInterval(() => {
     const now = new Date().getTime();
-    const diff = expiry - now;
+    const distance = expiryDate - now;
 
-    if (diff <= 0) {
-      document.getElementById("countdown").innerHTML = "Expired";
+    if(distance <= 0){
+      clearInterval(interval);
+      countdownEl.innerHTML = "Expired";
       return;
     }
 
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff / (1000*60*60)) % 24);
-    const m = Math.floor((diff / (1000*60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
+    const days = Math.floor(distance / (1000*60*60*24));
+    const hours = Math.floor((distance / (1000*60*60)) % 24);
+    const minutes = Math.floor((distance / (1000*60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
 
-    document.getElementById("countdown").innerHTML =
-      `${d}d ${h}h ${m}m ${s}s`;
+    countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }, 1000);
 </script>
 
